@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>画图板</title>
+	<link rel="stylesheet" href="css/drawingBoard.css">
+</head>
+<body>
+	<!-- 工具栏 -->
+	<div id="drawController">
+		<img src = 'images/drawingBoard/pencil.png' onclick="draw('pencil',this)" title = '铅笔'/>
+		<img src = 'images/drawingBoard/line.png' onclick="draw('line',this);" title = '画直线'/>
+		<img src = 'images/drawingBoard/cancel.png' onclick="cancel(this)" title = '撤销上一个操作'/>
+		<img src = 'images/drawingBoard/next.png' onclick="next(this)" title = '重做上一个操作'/>
+		<input id="chooseColor"  type="button"  class = 'c1 border_nochoose' onclick="showColor(this)" title = '选择颜色'/>
+		<img src = 'images/drawingBoard/square.png' onclick="draw('square',this)" title = '方形'/>
+		<img src = 'images/drawingBoard/circle.png' onclick="draw('circle',this)" title = '圆'/>
+		<img src = 'images/drawingBoard/handwriting.png' onclick="draw('handwriting',this)" title = '涂鸦'/>
+		<img src = 'images/drawingBoard/rubber.png' onclick="draw('rubber',this)" title = '橡皮擦'/>
+		<img  id="chooseSize" src = 'images/drawingBoard/line_size_1.png'  onclick="showLineSize(this)" title = '线条大小'/>
+		<img src = 'images/drawingBoard/xx.png' onclick="clearContext('1')" title = '清屏'/>
+		<img src = 'images/drawingBoard/save.png' onclick="save()" title = '保存'/>
+		<a href="#" download="picture.png"  id="downloadImage_a">
+			<img src = 'images/drawingBoard/download.png' title = '下载' onclick="downloadImage();"/>
+		</a>
+	</div>
+	<!--画布  -->
+	<div style="float:left;width:30%">
+		<canvas id="canvas" width="500px" height="400px" style="border:1px solid red;">您的浏览器不支持!</canvas>
+		<canvas id="canvas_bak" width="500px" height="400px" style="border:1px solid blue"></canvas>
+	</div>
+	<!--绘画成果 -->
+	<div id="showHistory">
+		<h2>记录您绘画成果</h2>
+		<table>
+			<tr>
+				<td>
+					<img src="images/drawingBoard/noimg.png" alt="">
+				</td>
+				<td>
+					<img src="images/drawingBoard/noimg.png" alt="">
+				</td>
+				<td>
+					<img src="images/drawingBoard/noimg.png" alt="">
+				</td>
+				<td>
+					<img src="images/drawingBoard/noimg.png" alt="">
+				</td>
+			</tr>
+			<tr align="center">
+				<td>
+					<a href="javascript:" id="del_01">删除</a>
+					<a href="javascript:" id="down_01" download="pic.png">下载</a>
+				</td>
+				<td>
+					<a href="javascript:" id="del_02">删除</a>
+					<a href="javascript:" id="down_02" download="pic.png">下载</a>
+				</td>
+				<td>
+					<a href="javascript:" id="del_03">删除</a>
+					<a href="javascript:" id="down_03" download="pic.png">下载</a>
+				</td>
+				<td>
+					<a href="javascript:" id="del_04">删除</a>
+					<a href="javascript:" id="down_04" download="pic.png">下载</a>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<!-- 颜色选择框-->
+	<div id="color">
+		<input type="button" class="c1">
+		<input type="button" class="c2">
+		<input type="button" class="c3">
+		<input type="button" class="c4">
+		<input type="button" class="c5">
+		<input type="button" class="c6">
+		<input type="button" class="c7">
+		<input type="button" class="c8">
+		<input type="button" class="c9">
+	</div>
+	<!-- 线条选择框-->
+	<div id="line_size">
+		<img src="images/drawingBoard/line_size_1.png" alt="" onclick="chooseLineSize(1)">
+		<img src="images/drawingBoard/line_size_3.png" alt="" onclick="chooseLineSize(3)">
+		<img src="images/drawingBoard/line_size_5.png" alt="" onclick="chooseLineSize(5)">
+		<img src="images/drawingBoard/line_size_7.png" alt="" onclick="chooseLineSize(7)">
+	</div>
+
+	<script type="text/javascript" src="script/jquery.js"></script>
+	<script type="text/javascript" src="script/drawingBoard.js"></script>
+</body>
+</html>

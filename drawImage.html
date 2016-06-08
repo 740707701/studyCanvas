@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>图片的绘制 裁剪 伸缩</title>
+</head>
+<body>
+	<canvas id="canvas" width="500" height="500" style="border:1px solid #0ff;"></canvas>
+	<!-- <img src="images/flower.jpg" alt="" id="flower"> -->
+	<img src="" alt="" id="img">
+	<script>
+		var canvas = document.getElementById("canvas");
+		var ctx = canvas.getContext("2d");
+		//创建图片对象
+		var img = new Image();
+		//var img = document.getElementById("flower");
+		window.onload = function(){
+			//ctx.drawImage(img,0,100,43,43,10,10,100,100);
+		};
+		//缩放
+		ctx.strokeRect(130,10,50,30);
+		//ctx.scale(2,1); //scale(scalewidth,scaleheight) (1=100%, 0.5=50%, 2=200%, 依次类推) scalewidth:缩放当前绘图的宽度,scaleheight缩放当前绘图的高度,缩放之后需要再次绘图一次
+		ctx.strokeRect(130,10,50,30);
+		//旋转20度
+		//ctx.rotate(20*Math.PI/180);
+		ctx.fillRect(130,100,60,30);
+		//文本
+		ctx.font="20px Georgia";
+		ctx.strokeText("Hello world",100,220);
+		ctx.fillText("hello Boy",100,250);
+		//渐变色文本
+		var gradient = ctx.createLinearGradient(0,0,canvas.width,0);
+		gradient.addColorStop(0,"magenta");
+		gradient.addColorStop(0.5,"blue");
+		gradient.addColorStop(1,"red");
+		ctx.fillStyle = gradient;//用渐变色填色
+		ctx.fillText("creatLinearGradient",100,280);
+
+		//阴影
+		ctx.shadowOffsetX = 5; //设置水平位移
+		ctx.shadowOffsetY = 5; //设置垂直位移
+		ctx.shadowBlur = 2; //设置迷糊度
+		ctx.shadowColor = "#cc0000"; //设置阴影颜色
+		ctx.fillRect(10,200,120,50);
+
+		//将画布保存成png图片
+		var dataUrl = canvas.toDataURL("image/png");
+		console.log(dataUrl);
+		var img = new Image();
+		var img = document.getElementById("img");
+		img.src = dataUrl;
+	</script>
+</body>
+</html>
