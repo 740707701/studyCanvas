@@ -15,10 +15,7 @@ var canvasLeft = $(canvas).offset().left;
 var size = 1;
 var color = '#000000';
 
-var startX;
-var startY;
 
-var canDraw = false;
 
 //撤销的数组
 var cancelList = new Array();
@@ -32,22 +29,16 @@ var draw = function(type,obj){
 	//先画在蒙版上在复制到画板上
 	chooseImg(obj);
 
-	//选择功能性按钮
-	function chooseImg(obj){
-		var imgAry = $("#drawController img");
-		for(var i = 0;i<imgAry.length;i++){
-			$(imgAry[i]).removeClass('border_choose');
-			$(imgAry[i]).addClass('border_nochoose');
-		}
-		$(obj).removeClass('border_nochoose');
-		$(obj).addClass('border_choose');
-	};
+	var startX;
+	var startY;
+
+	var canDraw = false;
 
 	//鼠标按下获取 开始画图
 	var mousedown = function(e){
 		ctx.strokeStyle = color;
 		ctx_bak.strokeStyle = color;
-		ctx_bak.strokeStyle = color;
+		ctx_bak.lineWidth = size;
 		e = e || window.event;
 		startX = e.clientX - canvasLeft;
 		startY = e.clientY - canvasTop;
@@ -79,6 +70,12 @@ var draw = function(type,obj){
 				clearContext();
 				saveImageToAry();
 			}
+			var x = e.clientX - canvasLeft;
+			var y = e.clientY - canvasTop;
+			ctx.beginPath();
+			ctx.moveTo(x,y);
+			ctx.lineTo(x+2,y+2);
+			ctx.stroke();
 		}
 	};
 
@@ -88,88 +85,152 @@ var draw = function(type,obj){
 		var x = e.clientX - canvasLeft;
 		var y = e.clientY - canvasTop;
 		//方块 4条直线
-		if(type =='square'){
+		if(type == 'square'){
 			if(canDraw){
-
-			}
-		}
-		/*
-			if(graphType == 'square'){
-			if(canDraw){
-				context_bak.beginPath();
+				ctx_bak.beginPath();
 				clearContext();
-				context_bak.moveTo(startX , startY);						
-				context_bak.lineTo(x  ,startY );
-				context_bak.lineTo(x  ,y );
-				context_bak.lineTo(startX  ,y );
-				context_bak.lineTo(startX  ,startY );
-				context_bak.stroke();
+				ctx_bak.moveTo(startX , startY);						
+				ctx_bak.lineTo(x  ,startY );
+				ctx_bak.lineTo(x  ,y );
+				ctx_bak.lineTo(startX  ,y );
+				ctx_bak.lineTo(startX  ,startY );
+				ctx_bak.stroke();
 			}
 		//直线
-		}else if(graphType =='line'){						
+		}else if(type =='line'){						
 			if(canDraw){
-				context_bak.beginPath();
+				ctx_bak.beginPath();
 				clearContext();
-				context_bak.moveTo(startX , startY);
-				context_bak.lineTo(x  ,y );
-				context_bak.stroke();
+				ctx_bak.moveTo(startX , startY);
+				ctx_bak.lineTo(x  ,y );
+				ctx_bak.stroke();
 			}
 		//画笔
-		}else if(graphType == 'pencil'){
+		}else if(type == 'pencil'){
 			if(canDraw){
-				context_bak.lineTo(e.clientX   - canvasLeft ,e.clientY  - canvasTop);
-				context_bak.stroke();						
+				ctx_bak.lineTo(e.clientX   - canvasLeft ,e.clientY  - canvasTop);
+				ctx_bak.stroke();						
 			}
 		//圆 未画得时候 出现一个小圆
-		}else if(graphType == 'circle'){						
+		}else if(type == 'circle'){						
 			clearContext();
 			if(canDraw){
-				context_bak.beginPath();			
+				ctx_bak.beginPath();			
 				var radii = Math.sqrt((startX - x) *  (startX - x)  + (startY - y) * (startY - y));
-				context_bak.arc(startX,startY,radii,0,Math.PI * 2,false);									
-				context_bak.stroke();
+				ctx_bak.arc(startX,startY,radii,0,Math.PI * 2,false);									
+				ctx_bak.stroke();
 			}else{	
-				context_bak.beginPath();					
-				context_bak.arc(x,y,20,0,Math.PI * 2,false);
-				context_bak.stroke();
+				ctx_bak.beginPath();					
+				ctx_bak.arc(x,y,20,0,Math.PI * 2,false);
+				ctx_bak.stroke();
 			}
 		//涂鸦 未画得时候 出现一个小圆
-		}else if(graphType == 'handwriting'){											
+		}else if(type == 'handwriting'){											
 			if(canDraw){
-				context_bak.beginPath();	
-				context_bak.strokeStyle = color;
-				context_bak.fillStyle  = color;
-				context_bak.arc(x,y,size*10,0,Math.PI * 2,false);		
-				context_bak.fill();
-				context_bak.stroke();
-				context_bak.restore();
+				ctx_bak.beginPath();	
+				ctx_bak.strokeStyle = color;
+				ctx_bak.fillStyle  = color;
+				ctx_bak.arc(x,y,size*10,0,Math.PI * 2,false);		
+				ctx_bak.fill();
+				ctx_bak.stroke();
+				ctx_bak.restore();
 			}else{	
 				clearContext();
-				context_bak.beginPath();					
-				context_bak.fillStyle  = color;
-				context_bak.arc(x,y,size*10,0,Math.PI * 2,false);
-				context_bak.fill();
-				context_bak.stroke();
+				ctx_bak.beginPath();					
+				ctx_bak.fillStyle  = color;
+				ctx_bak.arc(x,y,size*10,0,Math.PI * 2,false);
+				ctx_bak.fill();
+				ctx_bak.stroke();
 			}
 		//橡皮擦 不管有没有在画都出现小方块 按下鼠标 开始清空区域
-		}else if(graphType == 'rubber'){	
-			context_bak.lineWidth = 1;
+		}else if(type == 'rubber'){	
+			ctx_bak.lineWidth = 1;
 			clearContext();
-			context_bak.beginPath();			
-			context_bak.strokeStyle =  '#000000';						
-			context_bak.moveTo(x - size * 10 ,  y - size * 10 );						
-			context_bak.lineTo(x + size * 10  , y - size * 10 );
-			context_bak.lineTo(x + size * 10  , y + size * 10 );
-			context_bak.lineTo(x - size * 10  , y + size * 10 );
-			context_bak.lineTo(x - size * 10  , y - size * 10 );	
-			context_bak.stroke();		
+			ctx_bak.beginPath();			
+			ctx_bak.strokeStyle =  '#000000';						
+			ctx_bak.moveTo(x - size * 10 ,  y - size * 10 );						
+			ctx_bak.lineTo(x + size * 10  , y - size * 10 );
+			ctx_bak.lineTo(x + size * 10  , y + size * 10 );
+			ctx_bak.lineTo(x - size * 10  , y + size * 10 );
+			ctx_bak.lineTo(x - size * 10  , y - size * 10 );	
+			ctx_bak.stroke();		
 			if(canDraw){							
-				context.clearRect(x - size * 10 ,  y - size * 10 , size * 20 , size * 20);
+				ctx.clearRect(x - size * 10 ,  y - size * 10 , size * 20 , size * 20);
 										
 			}			
 		}
-		*/
+		
 	};
+	/*var mousemove = function(e){
+		e = e || window.event;
+		var x = e.clientX - canvasLeft;
+		var y = e.clientY - canvasTop;
+		//方块
+		if(type == "square"){
+			if(canDraw){
+				ctx_bak.beginPath();
+				clearContext();
+				ctx_bak.moveTo(startX,startY);
+				ctx_bak.lineTo(x,startY);
+				ctx_bak.lineTo(x,y);
+				ctx_bak.lineTo(startX,y);
+				ctx_bak.lineTo(startX,startY);
+				ctx_bak.stroke();
+			}
+		}else if(type == "line"){
+			if(canDraw){
+				ctx_bak.beginPath();
+				clearContext();
+				ctx_bak.moveTo(startX,startY);
+				ctx_bak.lineTo(x,y);
+				ctx_bak.stroke();
+			}
+		}else if(type == "pencil"){
+			if(canDraw){
+				ctx_bak.lineTo(e.clientX - canvasLeft, e.clientY - canvasTop);
+				ctx_bak.stroke();
+			}
+		}else if(type == "circle"){
+			if(canDraw){
+				clearContext();
+				if(canDraw){
+					ctx_bak.beginPath();
+					var radii = Math.sqrt(( startX - x)*(startX-x)+(startY - y)*(startY - y));
+					ctx_bak.arc(startX,startY,radii,0,Math.PI*2,false);
+					ctx_bak.stroke();
+				}else{
+					ctx_bak.beginPath();
+					ctx_bak.arc(x,y,20,0,Math.PI,2,false);
+					ctx_bak.stroke();
+				}
+			}
+		}else if(type == "handwriting"){
+			if(canDraw){
+				ctx_bak.beginPath();
+				ctx_bak.strokeStyle = color;
+				ctx_bak.fillStyle = color;
+				ctx_bak.arc(x,y,size*5,0,Math.PI*2,false);
+				ctx_bak.fill();
+				ctx_bak.stroke();
+				ctx_bak.restore();
+			}
+		}else if(type == "rubber"){
+			ctx_bak.lineWidth = 1;
+			clearContext();
+			ctx_bak.beginPath();
+			ctx_bak.strokeStyle = '#000000';
+			//绘制橡皮形状
+			ctx_bak.moveTo(x - size * 10 , y - size * 10);
+			ctx_bak.lineTo(x + size * 10 , y - size * 10);
+			ctx_bak.lineTo(x + size * 10 , y + size * 10);
+			ctx_bak.lineTo(x - size * 10 , y + size * 10);
+			ctx_bak.lineTo(x - size * 10 , y - size * 10);
+			ctx_bak.stroke();
+			if(canDraw){
+				ctx.clearRect(x - size * 10 , y - size *10 , size * 20 , size * 20);
+			}
+		}
+	};*/
 
 	//鼠标离开区域以外 除了涂鸦 都清空
 	var mouseout = function(){
@@ -183,6 +244,17 @@ var draw = function(type,obj){
 	$(canvas_bak).bind('mouseup',mouseup);
 	$(canvas_bak).bind('mousemove',mousemove);
 	$(canvas_bak).bind('mouseout',mouseout);
+
+	//选择功能性按钮
+	function chooseImg(obj){
+		var imgAry = $("#drawController img");
+		for(var i = 0;i<imgAry.length;i++){
+			$(imgAry[i]).removeClass('border_choose');
+			$(imgAry[i]).addClass('border_nochoose');
+		}
+		$(obj).removeClass('border_nochoose');
+		$(obj).addClass('border_choose');
+	};
 };
 
 //保存历史 用于撤销
@@ -193,7 +265,7 @@ var saveImageToAry= function(){
 };
 
 //  清空层
-var clearContent = function(type){
+var clearContext = function(type){
 	if(!type){
 		ctx_bak.clearRect(0,0,canvasWidth,canvasHeight);
 	}else{
@@ -244,5 +316,5 @@ function chooseLineSize(_size){
 $(function(){
 	$("img")[0].click();//默认第一张图片被点击,可直接绘图
 	$("#color input").click(chooseColor); //默认第一个颜色
-	draw();
+	//draw();
 });
