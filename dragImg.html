@@ -1,48 +1,14 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>实现图片的拖动 </title>
+	<title>实现图片的拖动</title>
 	<link rel="stylesheet" href="css/dragImg.css">
 </head>
 <body>
 	<canvas id="canvas" width="1000" height="600"></canvas>
-
-	<!-- <img src="images/dragImg/01.jpg" alt="">
-	<img src="images/dragImg/02.jpg" alt="">
-	<img src="images/dragImg/03.jpg" alt="">
-	<img src="images/dragImg/04.jpg" alt="">
-	<img src="images/dragImg/05.jpg" alt="">
-	<img src="images/dragImg/bg.jpg" alt="">  -->
 	
 	<script type="text/javascript" src="script/jquery.js"></script>
 	<script type="text/javascript" src="script/fabric.js"></script>
 	<script type="text/javascript" src="script/dragImg.js"></script>
-	<!--<script>
-		var canvas = new fabric.Canvas('canvas');
-		/*长方形*/
-		var rect = new fabric.Rect({
-			top:100,
-			left:100,
-			width:60,
-			height:70,
-			//fill:'yellow',
-			fill:'#f00',
-			//stroke:'green'
-		});
-		canvas.add(rect);
-		/*图片*/
-		var img = fabric.Image.fromURL('images/dragImg/01.jpg',function(img){
-			canvas.add(img.set({left:100,top:100,angle:30}));
-		});
-		/*阴影*/
-		/*fabric.loadSVGFromURL("images/aaa.svg",function(objects,options){
-			var obj = fabric.until.groupSVGElement(objects,options);
-			canvas.add(obj);
-			obj.set({lft:20,top:100});
-			obj.setShadow({color:'green'});
-			
-		});*/
-
-	</script> -->
 </body>
 </html>
