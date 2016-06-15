@@ -112,15 +112,13 @@
   canvas.add(textarea,textarea2);
 
 //var canvasUrl = canvas.toDataUrl("image/png");
-
+  var dataUrl = canvas.toDataURL({
+    format:"png",
+    width:100,
+    height:100,
+  });
+  var a = document.getElementById("a");
+  a.href = dataUrl;
 
 })();
-var canvas = this._canvas = new fabric.Canvas("canvas");
-var down = function(){
-	var dataUrl = canvas.toDataURL({
-		format:"png",
-		multiplier:2
-	});
-	var a = document.getElementById("a");
-	a.href = dataUrl;
-};
+
