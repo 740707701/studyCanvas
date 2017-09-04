@@ -1,52 +1,72 @@
 # canvas
-canvas api
+##canvas api
 
 ###下面是canvas fabric.js的用法
 
-锁住</br>	`lockMovementX	lockMovementY	lockRotation  	lockScalingX	lockScalingY `
-			
-###选中元素时去掉连接线</br>	`object.hasBorders = false;`
+锁住</br>    
 
-###选中元素时去掉四边的框</br> `object.hasControls=false，`
+```javascript
+lockMovementX	lockMovementY	lockRotation  
+lockScalingX    lockScalingY
+```
+			
+###选中元素时去掉连接线</br>
+```javascript 
+object.hasBorders = false;
+```
+
+###选中元素时去掉四边的框</br> 
+```javascript 
+object.hasControls=false;
+```
 
 ###设置选中元素时的样子</br>
-`
+
+```javascript
 object.set({
   borderColor: 'red',
   cornerColor: 'green',
   cornerSize: 6
 });
-`
+```
 
 
-###设置元素不能被操作</br> `Object.selectable=false `
+###设置元素不能被操作</br> 
+```javascript
+Object.selectable=false ;
+```
 
 ###设置背景图</br>
-`canvas.setBackgroundImage('img/golfball.png',canvas.renderAll.bind(canvas));`
+```javascript 
+canvas.setBackgroundImage('img/golfball.png',canvas.renderAll.bind(canvas));
+```
 
 ###设置背景透明显示</br>
-`canvas.setOverlayImage('../assets/jail_cell_bars.png', canvas.renderAll.bind(canvas));`
+```javascript 
+canvas.setOverlayImage('../assets/jail_cell_bars.png', canvas.renderAll.bind(canvas));
+```
+
 
 ###事件：</br>
 
-`
+```javascript 
 mouse:up mouse:move mouse:dowm
 object:modified object:moving  object:selected object:scalig object:rotating 
 before:selection:cleared  selection:cleared
 after：render
 "path:created"  "object:added" "object:removed"
-`
+```
 ###添加线</br>
-`
+```javascript 
 var line = new fabric.Line([10, 10, 100, 100], {
   fill: 'green',
   stroke: 'green'
 });
 canvas.add(line);
-`
+```
 
 ###添加矩形
-`
+```javascript 
 var canvas = new fabric.Canvas('c');
 var rect = new fabric.Rect({
   left: 100,
@@ -56,24 +76,24 @@ var rect = new fabric.Rect({
   height: 20
 });
 canvas.add(rect);
-`
+```
 
 ###移动到指定位置
 
-`
+```javascript 
 rect.set({ left: 20, top: 50 });
 canvas.renderAll();
-`
+```
 
 ###设置一些属性
-`
+```javascript 
 rect.set('fill', 'red');
 rect.set({ strokeWidth: 5, stroke: 'rgba(100,200,200,0.5)' });
 rect.set('angle', 15).set('flipY', true);
-`
+```
 
 ###添加圆和三角形
-`
+```javascript 
 var circle = new fabric.Circle({
   radius: 20, fill: 'green', left: 100, top: 100
 });
@@ -81,10 +101,10 @@ var triangle = new fabric.Triangle({
   width: 20, height: 30, fill: 'blue', left: 50, top: 50
 });
 canvas.add(circle, triangle);
-`
+```
 
 ###椭圆
-`
+```javascript 
 var ellipse = new fabric.Ellipse({
   rx: 45,
   ry: 80,
@@ -96,10 +116,10 @@ var ellipse = new fabric.Ellipse({
   top: 100
 });
 canvas.add(ellipse);
-`
+```
 
 ###Canvas中操作一些元素的方法</br>
-`
+```javascript 
 var canvas = new fabric.Canvas('c');
 var rect = new fabric.Rect();
 canvas.add(rect); // add object
@@ -108,10 +128,10 @@ canvas.item(0); // reference fabric.Rect added earlier (first object)
 canvas.getObjects(); // get all objects on canvas (rect will be first and only)
 
 canvas.remove(rect); // remove previously-added fabric.Rect
-`
+```
 
 ###加载图片的方法</br>
-`
+```javascript 
 var canvas = new fabric.Canvas('c');
 var imgElement = document.getElementById('my-image');
 var imgInstance = new fabric.Image(imgElement, {
@@ -121,56 +141,54 @@ var imgInstance = new fabric.Image(imgElement, {
   opacity: 0.85
 });
 canvas.add(imgInstance);
-`
-`
+
 fabric.Image.fromURL('my_image.png', function(oImg) {
   canvas.add(oImg);
 });
-`
-`
+
 fabric.Image.fromURL('my_image.png', function(oImg) {
   // scale image down, and flip it, before adding it onto canvas
   oImg.scale(0.5).setFlipX(true);
   canvas.add(oImg);
 });
-`
+```
 
 ###通过画路径为形状</br>
-`
+```javascript 
 var canvas = new fabric.Canvas('c');
 var path = new fabric.Path('M 0 0 L 200 100 L 170 200 z');
 path.set({ left: 120, top: 120 });
 canvas.add(path);
-`
+```
 ###可以设置路径样式</br>
-`
+```javascript 
 path.set({ fill: 'red', stroke: 'green', opacity: 0.5 });
-`
+```
 ###动画</br>
-`
+```javascript 
 rect.animate('angle', 45, {
   onChange: canvas.renderAll.bind(canvas)
 });
-`
-</br>或</br>
-`
+
+或
+
 rect.animate('left', '+=100', { onChange: canvas.renderAll.bind(canvas) });
-`
-</br>或</br>
-`
+
+或
+
 rect.animate('angle', '-=5', { onChange: canvas.renderAll.bind(canvas) });
-`
-</br>或</br>
-`
+
+或
+
 rect.animate('left', 500, {
   onChange: canvas.renderAll.bind(canvas),
   duration: 1000,
   easing: fabric.util.ease.easeOutBounce
 });
-`
+```
 
 ###组合的使用</br>
-`
+```javascript 
 var circle = new fabric.Circle({
   radius: 100,
   fill: '#eef',
@@ -192,34 +210,33 @@ var group = new fabric.Group([ circle, text ], {
 });
 
 canvas.add(group);
-`
+```
 
 ###设置组合中的元素</br>
-`
+```javascript 
 group.item(0).setFill('red');
 group.item(1).set({
   text: 'trololo',
   fill: 'white'
 });
-`
+```
 ###序列化</br>
-`
+```javascript 
 var canvas = new fabric.Canvas('c');
 JSON.stringify(canvas);
-`
-</br>或</br>
-`
-canvas.toDatalessJSON()
-`
 
+或
+
+canvas.toDatalessJSON()
+```
 ###反序列化</br>
-`
+```javascript 
 canvas.loadFromJSON（JSON.stringify(canvas)）
-`
+```
 
 
 ###透时图片随mouse移动显示</br>
-`
+```javascript 
 (function() {
   var canvas = this.__canvas = new fabric.Canvas('c');
   fabric.Object.prototype.transparentCorners = false;
@@ -261,62 +278,62 @@ canvas.loadFromJSON（JSON.stringify(canvas)）
     });
   });
 })();
-`
+```
 
 ###锁定旋转</br>
-`
+```javascript 
   var canvas = new fabric.Canvas('c6');
   canvas.add(new fabric.Rect({ width: 50, height: 50, fill: '#77f', top: 100, left: 100 }));
   canvas.item(0).lockRotation = true;
   this.__canvases.push(canvas);
-`
+```
 ###锁定大小缩放</br>
-`
+```javascript 
 var canvas = new fabric.Canvas('c7');
   canvas.add(new fabric.Rect({ width: 50, height: 50, fill: '#77f', top: 100, left: 100 }));
   canvas.item(0).lockScalingX = canvas.item(0).lockScalingY = true;
   this.__canvases.push(canvas);
-`
+```
 ###锁定X轴移动</br>
-`
+```javascript 
   var canvas = new fabric.Canvas('c8');
   canvas.add(new fabric.Rect({ width: 50, height: 50, fill: '#77f', top: 100, left: 100 }));
   canvas.item(0).lockMovementX = true;
   this.__canvases.push(canvas);
-`
+```
 ###锁定Y轴移动</br>
-`
+```javascript 
   var canvas = new fabric.Canvas('c9');
   canvas.add(new fabric.Rect({ width: 50, height: 50, fill: '#77f', top: 100, left: 100 }));
   canvas.item(0).lockMovementY = true;
   this.__canvases.push(canvas);
-`
+```
 ###设置背景图</br>
-`
+```javascript 
   var canvas = new fabric.Canvas('c17');
   canvas.add(new fabric.Circle({ radius: 30, fill: '#f55', top: 100, left: 100 }));
   canvas.setBackgroundImage('../assets/pug.jpg', canvas.renderAll.bind(canvas));
   this.__canvases.push(canvas);
-`
+```
 ###设置背景图前显</br>
- ` 
+```javascript  
   var canvas = new fabric.Canvas('c13');
   canvas.add(new fabric.Circle({ radius: 30, fill: '#f55', top: 100, left: 100 }));
   canvas.setOverlayImage('../assets/jail_cell_bars.png', canvas.renderAll.bind(canvas));
   this.__canvases.push(canvas);
-  `
+```
 
 ###设置背景色</br>
-`
+```javascript 
   var canvas = new fabric.Canvas('c5');
   canvas.add(new fabric.Circle({ radius: 30, fill: '#f55', top: 100, left: 100 }));
   canvas.backgroundColor = 'rgba(0,0,255,0.3)';
   canvas.renderAll();
   this.__canvases.push(canvas);
-  `
+```
 
 ###锁定某个元素不能操作</br>
-`
+```javascript 
   var canvas = new fabric.Canvas('c4');
   canvas.add(new fabric.Circle({ radius: 30, fill: '#f55', top: 100, left: 100 }));
   canvas.add(new fabric.Rect({ left: 50, top: 50, fill: 'green', width: 30, height: 30 }));
@@ -326,17 +343,17 @@ var canvas = new fabric.Canvas('c7');
 
   canvas.item(0).selectable = false;
   this.__canvases.push(canvas);
-`
+```
 
 ###Mouse选择时变成手形</br>
-`
+```javascript 
  var canvas = new fabric.Canvas('c11');
   canvas.add(new fabric.Circle({ radius: 30, fill: '#f55', top: 100, left: 100 }));
   canvas.hoverCursor = 'pointer';
   this.__canvases.push(canvas);
-`
+```
 ###Mouse选中时没有任何效果</br>
-`
+```javascript 
   var canvas = new fabric.Canvas('c10');
   canvas.add(new fabric.Circle({ radius: 30, fill: '#f55', top: 100, left: 100 }));
   canvas.item(0).hasControls = canvas.item(0).hasBorders = false;
@@ -362,18 +379,18 @@ var canvas = new fabric.Canvas('c7');
     }
   });
   this.__canvases.push(canvas);
-`
+```
 ###Mouse选择中时没四边操作位</br>
-`
+```javascript 
   var canvas = new fabric.Canvas('c16');
   canvas.add(new fabric.Circle({ radius: 30, fill: '#f55', top: 100, left: 100 }));
   canvas.item(0).hasControls = false;
   canvas.setActiveObject(canvas.item(0));
   this.__canvases.push(canvas);
- `
+```
 
 ###Mouse选择中的一些样式</br>
-`
+```javascript 
   var canvas = new fabric.Canvas('c1');
   canvas.add(new fabric.Circle({ radius: 30, fill: '#f55', top: 100, left: 100 }));
 
@@ -415,9 +432,9 @@ var canvas = new fabric.Canvas('c15');
   this.__canvases.push(canvas);
 
 --------------------------------------------------------------------
-`
+```
 ###璇转回复</br>
-`
+```javascript 
 (function() {
   fabric.Object.prototype.transparentCorners = false;
 
@@ -480,9 +497,9 @@ var canvas = new fabric.Canvas('c15');
   });
   canvas.add(photo);
 })();
-`
+```
 ###以点拉线</br>
-`
+```javascript 
 (function() {
   var canvas = this.__canvas = new fabric.Canvas('c', { selection: false });
   fabric.Object.prototype.originX = fabric.Object.prototype.originY = 'center';
@@ -543,9 +560,9 @@ var canvas = new fabric.Canvas('c15');
     canvas.renderAll();
   });
 })();
-`
+```
 ###由滚动条控制图片</br>
-`
+```javascript 
 (function() {
   var canvas = this.__canvas = new fabric.Canvas('c');
   fabric.Object.prototype.transparentCorners = false;
@@ -599,9 +616,9 @@ var canvas = new fabric.Canvas('c15');
     'object:rotating': updateControls
   });
 })();
-`
+```
 ###静态的canvas</br>
-`
+```javascript 
 (function() {
   var canvas = this.__canvas = new fabric.StaticCanvas('c');
 
@@ -624,9 +641,9 @@ var canvas = new fabric.Canvas('c15');
   }
   animate();
 })();
-`
+```
 ###对象外面包矩形</br>
-`
+```javascript 
 (function() {
   var canvas = this.__canvas = new fabric.Canvas('c');
   fabric.Object.prototype.transparentCorners = false;
@@ -674,9 +691,9 @@ var canvas = new fabric.Canvas('c15');
     })
   });
 })();
-`
+```
 ###元素移动到别的元素上时</br>
-`
+```javascript 
 (function() {
   var canvas = this.__canvas = new fabric.Canvas('c');
   fabric.Object.prototype.transparentCorners = false;
@@ -720,9 +737,9 @@ var canvas = new fabric.Canvas('c15');
     });
   }
 })();
-`
+```
 ###关于mouse移动的一些操作</br>
-`
+```javascript 
 (function() {
   fabric.Object.prototype.originX = fabric.Object.prototype.originY = 'center';
 
@@ -879,15 +896,11 @@ var canvas = new fabric.Canvas('c15');
             if (b && canvas.getObjects()[i] != c) {
                 t = canvas.getObjects()[i];
                 if (t === c) continue;
-               
             }
 
             if (canvas.getObjects()[i] === t) {
                 ti = i;
             }
-
-
-
         }
 
         }
@@ -943,15 +956,7 @@ canvas.insertAt(rect4,0);//
 
 canvas.on("mouse:move",function(o){
 	var pointer=canvas.getPointer(o.e);
-	
-	
-	
-	$("#div1").html(pointer.x+"---"+pointer.y);
-	
-	
-	
-	
-	
+	$("#div1").html(pointer.x+"---"+pointer.y);	
 });
 
 //判断选中的类型
@@ -989,20 +994,13 @@ selectable,visible
 
 //编历 canvas中元素的另一种方法
 for (var i = 0; i < canvas.getObjects().length; i++) {
-
     var elem = canvas.getObjects()[i];
-
 }
-
 
 //绑定各个元素的方法
 
 canvas.on('object:selected', function (options) {
-
-   
-
-    alert(String(options.target.type));
-   
+    alert(String(options.target.type)); 
 });
 
 //mouse状态
@@ -1011,18 +1009,18 @@ canvas.defaultCursor = 'pointer';
 canvas.moveCursor = 'pointer';
 
 //一些属性
-evented 
-hasBorders //没四边
-hasControls//不能控件
-hasRotatingPoint //控制旋转点不可见
-includeDefaultValues//为 false 时不可以序列化
-lockMovementX
-lockMovementY
-lockScalingX
-lockScalingY
-lockUniScaling//只能成比例缩放
-selectable
-visible 
+//evented 
+//hasBorders //没四边
+//hasControls//不能控件
+//hasRotatingPoint //控制旋转点不可见
+//includeDefaultValues//为 false 时不可以序列化
+//lockMovementX
+//lockMovementY
+//lockScalingX
+//lockScalingY
+//lockUniScaling//只能成比例缩放
+//selectable
+//visible 
 
 //组中图片更换 src
 
@@ -1035,35 +1033,31 @@ visible
 
 //你发的那个置底的没有效果 
 //我还是用循环去遍历了 
- var _allObjects = canvas.getObjects();
-        var _tempObjects = new Array();
-        var selectObject = canvas.getActiveObject();
-        _tempObjects.push(selectObject);
-        for (var i = 0; i < _allObjects.length; i++) {
-            if (_allObjects[i] != selectObject)
-                _tempObjects.push(_allObjects[i]);
-        }
-        for (var k = 0; k < _tempObjects.length; k++) {
-            for (var j = 0; j < _allObjects.length; j++) {
-                if (_tempObjects[k] == _allObjects[j]) {
-                    canvas.remove(_allObjects[j]);
-                    canvas.add(_tempObjects[k]);
-                }
+    var _allObjects = canvas.getObjects();
+    var _tempObjects = new Array();
+    var selectObject = canvas.getActiveObject();
+    _tempObjects.push(selectObject);
+    for (var i = 0; i < _allObjects.length; i++) {
+        if (_allObjects[i] != selectObject)
+            _tempObjects.push(_allObjects[i]);
+    }
+    for (var k = 0; k < _tempObjects.length; k++) {
+        for (var j = 0; j < _allObjects.length; j++) {
+            if (_tempObjects[k] == _allObjects[j]) {
+                canvas.remove(_allObjects[j]);
+                canvas.add(_tempObjects[k]);
             }
         }
+    }
         
-        canvas.renderAll();
-
-
+    canvas.renderAll();
 
 //获取元素位置
- var c = canvas.getActiveObject();
+var c = canvas.getActiveObject();
 
-        if (c == null) return;
+if (c == null) return;
 
-        
-
-        alert(canvas.getObjects().indexOf(c));
+alert(canvas.getObjects().indexOf(c));
 
 //更换图片src
 
@@ -1150,46 +1144,30 @@ canvas.hoverCursor = 'pointer';
 canvas.moveCursor = 'pointer';
 
 //指针样式
-text是移动到文本上的那种效果 
-wait是等待的那种效果 
-default是默认效果 
-e-resize是向右的箭头 
-ne-resize是向右上的箭头 
-n-resize是向上的箭头 
-nw-resize是向左上的箭头 
-w-resize是向左的箭头 
-sw-resize是左下的箭头 
-s-resize是向下的箭头 
-se-resize是向右下的箭头 
-auto是由系统自动给出效果
+//text是移动到文本上的那种效果 
+//wait是等待的那种效果 
+//default是默认效果 
+//e-resize是向右的箭头 
+//ne-resize是向右上的箭头 
+//n-resize是向上的箭头 
+//nw-resize是向左上的箭头 
+//w-resize是向左的箭头 
+//sw-resize是左下的箭头 
+//s-resize是向下的箭头 
+//se-resize是向右下的箭头 
+//auto是由系统自动给出效果
 
 //
 canvas.getActiveObject();
 canvas.discardActiveObject(); 
-
 //画图完成后可以选中
-
-	var objs= canvas.getObjects();
-       	 	for(var obj in objs)
-		    {
-		    	objs[obj].setCoords();
-		    	
-		    }    
-
-
+var objs= canvas.getObjects();
+for(var obj in objs)
+    objs[obj].setCoords();
+}    
 //循环canvas
-
 canvas.forEachObject(function(obj){
-			
-			
-		});   	
-`
+});   	
+```
 
-
-
-
-
-
-
-		
 
