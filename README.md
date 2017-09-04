@@ -10,11 +10,13 @@ canvas api
 选中元素时去掉四边的框 object.hasControls=false，
 
 设置选中元素时的样子
+`
 object.set({
   borderColor: 'red',
   cornerColor: 'green',
   cornerSize: 6
 });
+`
 
 
 设置元素不能被操作 Object.selectable=false 
@@ -177,6 +179,7 @@ group.item(1).set({
 });
 
 序列化
+
 var canvas = new fabric.Canvas('c');
 JSON.stringify(canvas);
 或
