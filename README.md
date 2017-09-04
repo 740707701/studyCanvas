@@ -1,5 +1,5 @@
-# studyCanvas
-canvas demo
+# canvas
+canvas api
 
 ###下面是canvas fabric.js的用法###
 
